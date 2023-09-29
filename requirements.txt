@@ -1,0 +1,15 @@
+Flask==2.0.2
+openai==0.27.8
+whisper==1.1.10
+torch==2.0.1
+torchvision
+torchaudio
+qdrant-client==1.2.0
+python-dotenv==0.21.0
+requests==2.28.1
+twilio==8.5.0
+replicate
+gunicorn
+git+https://github.com/openai/whisper.git
+ffmpeg-python
+openai-whisper

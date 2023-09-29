@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ListenAI</title>
+    <link href="{{ url_for('api.static', filename='images/favicon.ico') }}" rel="icon" />
+    <link href="{{ url_for('api.static', filename='styles/main.css') }}" rel="stylesheet" />
+  </head>
+  <body
+    x-data="{ page: 'home', 'loaded': true, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }"
+  >
+  <header class="fixed left-0 top-0 w-full z-9999 py-7 lg:py-0 bg-dark/70 backdrop-blur-lg shadow !py-4 lg:!py-0 transition duration-100 before:absolute before:w-full before:h-[1px] before:bottom-0 before:left-0 before:features-row-border" :class="{ 'bg-dark/70 backdrop-blur-lg shadow !py-4 lg:!py-0 transition duration-100 before:absolute before:w-full before:h-[1px] before:bottom-0 before:left-0 before:features-row-border' : stickyMenu }" @scroll.window="stickyMenu = (window.scrollY > 0) ? true : false">
+    <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
+    <div class="w-full lg:w-1/4 flex items-center justify-between">
+    <a href="/">
+    <img src="{{url_for('api.static', filename='images/logo1.svg')}}" alt="logo1">
+    </a>
+    
+    <button class="lg:hidden block" @click="navigationOpen = !navigationOpen">
+    <span class="block relative cursor-pointer w-5.5 h-5.5">
+    <span class="du-block absolute right-0 w-full h-full">
+    <span class="block relative top-0 left-0 bg-white rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0] !w-full delay-300" :class="{ '!w-full delay-300': !navigationOpen }"></span>
+    <span class="block relative top-0 left-0 bg-white rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150 !w-full delay-400" :class="{ '!w-full delay-400': !navigationOpen }"></span>
+    <span class="block relative top-0 left-0 bg-white rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200 !w-full delay-500" :class="{ '!w-full delay-500': !navigationOpen }"></span>
+    </span>
+    <span class="du-block absolute right-0 w-full h-full rotate-45">
+    <span class="block bg-white rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full !h-0 delay-[0]" :class="{ '!h-0 delay-[0]': !navigationOpen }"></span>
+    <span class="block bg-white rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5 !h-0 dealy-200" :class="{ '!h-0 dealy-200': !navigationOpen }"></span>
+    </span>
+    </span>
+    </button>
+    
+    </div>
+    <div class="w-full lg:w-3/4 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-between" :class="{ '!visible bg-dark shadow-lgrelative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5': navigationOpen }">
+    <nav>
+    <ul class="flex lg:items-center flex-col lg:flex-row gap-5 lg:gap-2">
+    <li class="nav__menu lg:py-7 lg:!py-4" :class="{ 'lg:!py-4' : stickyMenu }">
+    <a href="/#home" class="relative text-white/80 text-sm py-1.5 px-4 border border-transparent hover:text-white hover:nav-gradient !text-white nav-gradient" :class="{'!text-white nav-gradient' :page === 'home'}">Home</a>
+    </li>
+    <li class="nav__menu lg:py-7 lg:!py-4" :class="{ 'lg:!py-4' : stickyMenu }">
+    <a href="/#features" class="relative text-white/80 text-sm py-1.5 px-4 border border-transparent hover:text-white hover:nav-gradient">Features</a>
+    </li>
+    <li class="nav__menu lg:py-7 lg:!py-4" :class="{ 'lg:!py-4' : stickyMenu }">
+    <a href="/#about" class="relative text-white/80 text-sm py-1.5 px-4 border border-transparent hover:text-white hover:nav-gradient">About Us</a>
+    </li>
+
+    <li class="nav__menu lg:py-7 lg:!py-4" :class="{ 'lg:!py-4' : stickyMenu }">
+      <a href="/#support" class="relative text-white/80 text-sm py-1.5 px-4 border border-transparent hover:text-white hover:nav-gradient">Contact Us</a>
+    </li>
+    
+    <li class="nav__menu lg:py-7 lg:!py-4" :class="{ 'lg:!py-4' : stickyMenu }">
+    <a href="/#blog" class="relative text-white/80 text-sm py-1.5 px-4 border border-transparent hover:text-white hover:nav-gradient">Demo</a>
+    </li>
+    
+    </ul>
+    </nav>
+    
+    </div>
+    </div>
+    </header>
+    <main>
+      <section
+        id="home"
+        class="relative overflow-hidden z-10 pt-35 md:pt-40 xl:pt-45"
+      >
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="absolute -z-10 pointer-events-none inset-0 overflow-hidden -mx-28"
+          >
+            <div
+              class="absolute -z-1 -top-[128%] sm:-top-[107%] xl:-top-[73%] left-1/2 -translate-x-1/2 -u-z-10 hero-circle-gradient w-full h-[1282px] rounded-full max-w-[1282px]"
+            ></div>
+            <div
+              class="absolute -z-1 -top-[112%] sm:-top-[93%] xl:-top-[62%] left-1/2 -translate-x-1/2 -u-z-10 hero-circle-gradient w-full h-[1046px] rounded-full max-w-[1046px]"
+            ></div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -u-z-10">
+              <img src="{{url_for('api.static', filename='images/blur-02.svg')}}" alt="blur" class="max-w-none" />
+            </div>
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 -u-z-10">
+              <img src="{{url_for('api.static', filename='images/blur-01.svg')}}" alt="blur" class="max-w-none" />
+            </div>
+          </div>
+        </div>
+
+        <div class="mx-auto max-w-[900px] px-4 sm:px-8 xl:px-0 relative z-1">
+          <div class="text-center">
+            <a
+              href="/"
+              class="hero-subtitle-gradient hover:hero-subtitle-hover relative mb-5 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+            >
+              <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+              <span class="hero-subtitle-text">
+                Your Ultimate Companion!
+              </span>
+            </a>
+            <h1
+              class="text-white mb-6 text-3xl font-extrabold sm:text-5xl xl:text-heading-1"
+            >
+              Elevate Your Health Journey with Our Caring AI Chatbot Companion
+            </h1>
+            <p class="max-w-[501px] mx-auto mb-9 font-medium md:text-lg">
+              I am ListenAI, an AI designed to help with your life decisions.
+              I can provide you with advice, insights and understanding. I'm
+              here to listen to you without judgment and to help you make the
+              choices that are right for you.
+            </p>
+            <a
+              href="/home/api"
+              class="hero-button-gradient inline-flex rounded-lg py-3 px-7 text-white font-medium ease-in duration-300 hover:opacity-80"
+            >
+              Get Started Now
+            </a>
+          </div>
+        </div>
+        <div class="mt-17" data-wow-delay="0.1s">
+          <img class="mx-auto" src="{{url_for('api.static', filename='images/hero.svg')}}" alt="hero" />
+        </div>
+      </section>
+
+      <section
+        id="features"
+        class="overflow-hidden pt-17.5 lg:pt-22.5 xl:pt-27.5 scroll-mt-17"
+      >
+        <div class="max-w-[1222px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div class="wow fadeInUp text-center">
+            <span
+              class="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+            >
+              <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+              <span class="hero-subtitle-text"> Some of our Main Features </span>
+            </span>
+            <h2
+              class="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2"
+            >
+              Key Features of Our Tool
+            </h2>
+            <p class="max-w-[714px] mx-auto mb-5 font-medium">
+              Meet ListenAI, the mental health tool that answers the skyrocketing need for mental health care, and breaks down the systemic constraints that block equal access to it. Designed by humans, powered by AI, and grounded in science, ListenAI easily integrates with health systems to provide evidenced-based behavioral health solutions that get people off a waitlist, and onto a path to feeling better.
+
+
+            </p>
+          </div>
+          <div class="relative">
+            <div
+              class="features-row-border rotate-90 w-1/2 h-[1px] absolute top-1/2 left-1/2 -translate-y-1/2 lg:-translate-x-1/3 lg:left-1/4 hidden lg:block"
+            ></div>
+            <div
+              class="features-row-border rotate-90 w-1/2 h-[1px] absolute top-1/2 right-1/2 -translate-y-1/2 lg:right-[8.3%] hidden lg:block"
+            ></div>
+
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full sm:w-1/2 lg:w-1/3">
+                <div
+                  class="group relative overflow-hidden text-center py-8 sm:py-10 xl:py-15 px-4 lg:px-8 xl:px-13"
+                >
+                  <span
+                    class="group-hover:opacity-100 opacity-0 features-bg absolute w-full h-full left-0 top-0 -z-1"
+                  ></span>
+                  <span
+                    class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto"
+                  >
+                    <img src="{{url_for('api.static', filename='images/icon-01.svg')}}" alt="icon" />
+                  </span>
+                  <h4 class="font-semibold text-lg text-white mb-4">
+                    Intelligent Voice Powered Conversations
+                  </h4>
+                  <p class="font-medium">
+                    By effortlessly translating spoken words into meaningful responses with the help of Whisper, ListenAI offers a natural and intuitive communication experience, making conversations with the chatbot as effortless as speaking to a friend.
+                  </p>
+                </div>
+              </div>
+
+              <div class="w-full sm:w-1/2 lg:w-1/3">
+                <div
+                  class="group relative overflow-hidden text-center py-8 sm:py-10 xl:py-15 px-4 lg:px-8 xl:px-13"
+                >
+                  <span
+                    class="group-hover:opacity-100 opacity-0 features-bg absolute w-full h-full left-0 top-0 -z-1"
+                  ></span>
+                  <span
+                    class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto"
+                  >
+                    <img src="{{url_for('api.static', filename='images/icon-02.svg')}}" alt="icon" />
+                  </span>
+                  <h4 class="font-semibold text-lg text-white mb-4">
+                    Answer patient's questions 24/7
+                  </h4>
+                  <p class="font-medium">
+                    Your round-the-clock healthcare companion, providing answers
+                    and care whenever you need them. With our integrated ListenAI Whatsapp Bot, you can get help with your mental health anytime, anywhere. 
+                  </p>
+                </div>
+              </div>
+
+              <div class="w-full sm:w-1/2 lg:w-1/3">
+                <div
+                  class="group relative overflow-hidden text-center py-8 sm:py-10 xl:py-15 px-4 lg:px-8 xl:px-13"
+                >
+                  <span
+                    class="group-hover:opacity-100 opacity-0 features-bg absolute w-full h-full left-0 top-0 -z-1"
+                  ></span>
+                  <span
+                    class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto"
+                  >
+                    <img src="{{url_for('api.static', filename='images/icon-03.svg')}}" alt="icon" />
+                  </span>
+                  <h4 class="font-semibold text-lg text-white mb-4">
+                    Multilingual Support
+                  </h4>
+                  <p class="font-medium">
+                    Empower your conversations with our chatbot's seamless Multilingual Support, fueled by advanced LLMs for clear and effective responses across diverse languages.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="features-row-border w-full h-[1px]"></div>
+
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full sm:w-1/2 lg:w-1/3">
+                <div
+                  class="group relative overflow-hidden text-center py-8 sm:py-10 xl:py-15 px-4 lg:px-8 xl:px-13"
+                >
+                  <span
+                    class="group-hover:opacity-100 opacity-0 features-bg absolute w-full h-full left-0 top-0 -z-1 rotate-180"
+                  ></span>
+                  <span
+                    class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto"
+                  >
+                    <img src="{{url_for('api.static', filename='images/icon-04.svg')}}" alt="icon" />
+                  </span>
+                  <h4 class="font-semibold text-lg text-white mb-4">
+                    Life changes. ListenAI does, too.
+                  </h4>
+                  <p class="font-medium">
+                    With mental health needs in constant flux, our distinctive strategy ensures both impactful outcomes and ongoing enhancement. ListenAI stands ready to provide timely and tailored support, making a difference precisely when it matters most.
+                  </p>
+                </div>
+              </div>
+
+              <div class="w-full sm:w-1/2 lg:w-1/3">
+                <div
+                  class="group relative overflow-hidden text-center py-8 sm:py-10 xl:py-15 px-4 lg:px-8 xl:px-13"
+                >
+                  <span
+                    class="group-hover:opacity-100 opacity-0 features-bg absolute w-full h-full left-0 top-0 -z-1 rotate-180"
+                  ></span>
+                  <span
+                    class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto"
+                  >
+                    <img src="{{url_for('api.static', filename='images/icon-05.svg')}}" alt="icon" />
+                  </span>
+                  <h4 class="font-semibold text-lg text-white mb-4">
+                    Open Source Integrated
+                  </h4>
+                  <p class="font-medium">
+                    Embrace our cost-effective solution as we integrate the open-source LLAMA 2 model by Meta, ensuring efficient AI capabilities. Your data remains private, safeguarding your confidentiality and trust.
+                  </p>
+                </div>
+              </div>
+
+              <div class="w-full sm:w-1/2 lg:w-1/3">
+                <div
+                  class="group relative overflow-hidden text-center py-8 sm:py-10 xl:py-15 px-4 lg:px-8 xl:px-13"
+                >
+                  <span
+                    class="group-hover:opacity-100 opacity-0 features-bg absolute w-full h-full left-0 top-0 -z-1 rotate-180"
+                  ></span>
+                  <span
+                    class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-8 mx-auto"
+                  >
+                    <img src="{{url_for('api.static', filename='images/icon-06.svg')}}" alt="icon" />
+                  </span>
+                  <h4 class="font-semibold text-lg text-white mb-4">
+                    AI Tailored to You
+                  </h4>
+                  <p class="font-medium">
+                    Tailor your chatbot to embody your organization's essence. Our solution empowers customization of responses, behavior, and language, seamlessly aligning with your branding.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pt-12.5">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div class="grid sm:grid-cols-12 gap-7.5" data-highlighter>
+            <div class="sm:col-span-12">
+              <div class="relative rounded-3xl features-box-border">
+                <div
+                  class="relative overflow-hidden rounded-3xl p-10 xl:p-15 box-hover"
+                >
+                  <div class="flex items-center justify-between relative z-20">
+                    <div class="max-w-[477px] w-full">
+                      <span
+                        class="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+                      >
+                        <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+                        <span class="hero-subtitle-text">
+                          ListenAI
+                        </span>
+                      </span>
+                      <h3 class="text-white mb-4.5 font-bold text-heading-4">
+                        Global Reach, Local Connection
+                      </h3>
+                      <p class="font-medium mb-10">
+                        Break language barriers effortlessly with our chatbot's multilingual prowess. Whether it's English, Spanish, or any language in between, our solution empowers your organization to connect with users worldwide in their preferred language.
+                      </p>
+                      <p class="font-medium mb-10">
+                        Couple that with the power to choose between OpenAI GPT and Meta's LLAMA 2 models for responses, ensuring tailor-made conversations that resonate with your audience.
+                      </p>
+                    </div>
+                    <div class="max-w-[428px] w-full hidden sm:block">
+                      <img src="{{url_for('api.static', filename='images/big-icon.svg')}}" alt="icon" />
+                    </div>
+                  </div>
+
+                  <div
+                    class="absolute -z-10 pointer-events-none inset-0 overflow-hidden -mx-28"
+                  >
+                    <span class="absolute right-0 bottom-0"
+                      ><img src="{{url_for('api.static', filename='images/shape-01.png')}}" alt="shape"
+                    /></span>
+                    <span class="absolute left-0 top-0"
+                      ><img src="{{url_for('api.static', filename='images/shape-02.svg')}}" alt="shape"
+                    /></span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-03.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-04.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-05.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute right-0 top-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/shape-03.svg')}}"
+                        alt="shape"
+                        class="max-w-none"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sm:col-span-7">
+              <div class="relative rounded-3xl features-box-border">
+                <div
+                  class="relative overflow-hidden rounded-3xl px-11 pt-12.5 pb-14 box-hover box-hover-small"
+                >
+                  <div class="relative z-20">
+                    <span
+                      class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-13.5 mx-auto"
+                    >
+                      <img src="{{url_for('api.static', filename='images/icon-05.svg')}}" alt="icon" />
+                    </span>
+                    <h3 class="text-white mb-4.5 font-semibold text-heading-6">
+                      Whisper of Innovation
+                    </h3>
+                    <p class="font-medium">
+                      Voice interactions are the heart of human communication, and we've harnessed that essence with our Whisper model integration. Elevate engagement and accessibility with voice-enabled interactions, crafting conversations that flow naturally. 
+                      </p>
+                      <br/>
+                      <p class="font-medium">
+                      Imagine users effortlessly seeking assistance with a simple command, where technology becomes an invisible assistant, always ready to provide solutions.
+                    </p>
+                  </div>
+
+                  <div
+                    class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+                  >
+                    <span class="absolute left-0 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-06.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute right-0 top-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-07.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute right-[16%] top-[16%]"
+                      ><img src="{{url_for('api.static', filename='images/shape-04.svg')}}" alt="shape"
+                    /></span>
+                    <span class="absolute left-0 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-08.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute left-0 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-09.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sm:col-span-5">
+              <div class="relative rounded-3xl features-box-border">
+                <div
+                  class="relative overflow-hidden rounded-3xl px-11 pt-12.5 pb-14 box-hover box-hover-small"
+                >
+                  <div class="relative z-20">
+                    <span
+                      class="icon-border relative max-w-[80px] w-full h-20 rounded-full inline-flex items-center justify-center mb-13.5 mx-auto"
+                    >
+                      <img src="{{url_for('api.static', filename='images/icon-07.svg')}}" alt="icon" />
+                    </span>
+                    <h3 class="text-white mb-4.5 font-semibold text-heading-6">
+                      Your Chatbot, Your Brand
+                    </h3>
+                    <p class="font-medium">
+                      Step into a era of personalized user engagement. With the power to customize responses, behaviors, and even language, every interaction becomes a seamless extension of your brand. 
+                      </p>
+                      <br/>
+                      <p class="font-medium">
+                      Turn challenges into opportunities and set the stage for lasting relationships, all while providing top-notch assistance.
+                    </p>
+                  </div>
+
+                  <div
+                    class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+                  >
+                    <span class="absolute right-[14%] top-[17%]"
+                      ><img src="{{url_for('api.static', filename='images/shape-05.svg')}}" alt="shape"
+                    /></span>
+                    <span class="absolute left-0 bottom-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-10.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute top-0 right-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-11.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                    <span class="absolute top-0 right-0">
+                      <img
+                        src="{{url_for('api.static', filename='images/blur-12.svg')}}"
+                        alt="blur"
+                        class="max-w-none"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="about"
+        class="relative z-20 overflow-hidden pt-22.5 lg:pt-27.5 xl:pt-32.5 scroll-mt-17"
+      >
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div class="relative top-18">
+            <div
+              class="absolute -z-10 pointer-events-none inset-0 overflow-hidden -my-55"
+            >
+              <div class="absolute left-1/2 -translate-x-1/2 top-0">
+                <img src="{{url_for('api.static', filename='images/blur-13.svg')}}" alt="blur" class="max-w-none" />
+              </div>
+              <div class="absolute left-1/2 -translate-x-1/2 top-0">
+                <img src="{{url_for('api.static', filename='images/blur-14.svg')}}" alt="blur" class="max-w-none" />
+              </div>
+              <div class="absolute left-1/2 -translate-x-1/2 top-0">
+                <img src="{{url_for('api.static', filename='images/blur-15.svg')}}" alt="blur" class="max-w-none" />
+              </div>
+            </div>
+            <div
+              class="max-w-[830px] w-full h-[830px] rounded-full bg-dark absolute left-1/2 -translate-x-1/2 top-0 pricing-circle"
+            ></div>
+            <div
+              class="max-w-[482px] w-full h-60 overflow-hidden absolute -z-1 -top-30 left-1/2 -translate-x-1/2"
+            >
+              <div class="stars"></div>
+              <div class="stars2"></div>
+            </div>
+          </div>
+
+          <div class="flex justify-center gap-7.5 relative -z-1">
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+            <div
+              class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+            ></div>
+          </div>
+          
+
+          <div class="wow fadeInUp mb-17.5 -mt-24 text-center z-10 relative">
+            <span
+              class="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+            >
+              <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+              <span class="hero-subtitle-text"> ListenAI </span>
+            </span>
+            <h2
+              class="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2"
+            >
+              About Us
+            </h2>
+            <p class="max-w-[714px] mx-auto font-medium">
+              Our AI-powered healthcare tool is meticulously crafted to empower you with exceptional medical capabilities, making the healthcare process more efficient, accurate, and reassuring.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7.5">
+            <div class="wow fadeInUp rounded-3xl bg-dark relative z-20 overflow-hidden pt-12.5 pb-10 px-8 xl:px-10 pricing-item-border">
+              <div class="mb-6 overflow-hidden rounded-full mx-auto" style="width: 200px; height: 200px; background: rgb(12, 3, 33); background: linear-gradient(90deg, rgba(12, 3, 33, 1) 0%, rgba(44, 29, 98, 1) 48%, rgba(12, 3, 33, 1) 100%);">
+                  <img src="{{url_for('api.static', filename='images/devanshu.jpeg')}}" alt="image" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 0 auto;" />
+              </div>
+              <div class="my-10 w-full h-[1px] pricing-gradient-divider"></div>
+              <ul class="flex flex-col gap-4">
+                <h3 class="font-semibold text-heading-6 text-white mb-5.5">
+                  Devanshu Mahapatra
+                </h3>
+                <li class="flex items-center gap-5">
+                  <a href="https://github.com/Devanshu-17/" class="hover:text-white ease-in duration-300">
+                    <svg
+                      class="fill-current"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_368_11839)">
+                        <path
+                          d="M12 0.674805C5.625 0.674805 0.375 5.8498 0.375 12.2998C0.375 17.3998 3.7125 21.7498 8.3625 23.3248C8.9625 23.4373 9.15 23.0623 9.15 22.7998C9.15 22.5373 9.15 21.7873 9.1125 20.7748C5.8875 21.5248 5.2125 19.1998 5.2125 19.1998C4.6875 17.8873 3.9 17.5123 3.9 17.5123C2.85 16.7623 3.9375 16.7623 3.9375 16.7623C5.1 16.7998 5.7375 17.9623 5.7375 17.9623C6.75 19.7623 8.475 19.2373 9.1125 18.8998C9.225 18.1498 9.525 17.6248 9.8625 17.3248C7.3125 17.0623 4.575 16.0498 4.575 11.6248C4.575 10.3498 5.0625 9.3373 5.775 8.5498C5.6625 8.2873 5.25 7.0873 5.8875 5.4748C5.8875 5.4748 6.9 5.1748 9.1125 6.6748C10.05 6.4123 11.025 6.2623 12.0375 6.2623C13.05 6.2623 14.0625 6.3748 14.9625 6.6748C17.175 5.2123 18.15 5.4748 18.15 5.4748C18.7875 7.0498 18.4125 8.2873 18.2625 8.5498C19.0125 9.3373 19.4625 10.3873 19.4625 11.6248C19.4625 16.0498 16.725 17.0623 14.175 17.3248C14.5875 17.6998 14.9625 18.4498 14.9625 19.4998C14.9625 21.0748 14.925 22.3123 14.925 22.6873C14.925 22.9873 15.15 23.3248 15.7125 23.2123C20.2875 21.6748 23.625 17.3623 23.625 12.2248C23.5875 5.8498 18.375 0.674805 12 0.674805Z"
+                          fill=""
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_368_11839">
+                          <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 58px; font-size: larger;">Github</span>
+                </li>
+                <li class="flex items-center gap-5">
+                  <a href="https://www.linkedin.com/in/devanshu-mahapatra-05095921a/" class="hover:text-white ease-in duration-300">
+                    <svg width="25px" height="25px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
+
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 50px; font-size: larger;">LinkedIn</span>
+                </li>
+                <li class="flex items-center gap-5">
+                  <a href="https://drive.google.com/file/d/15jtRqqTnQps5ZNx8V_3gRYy7Rl13fWga/view?usp=sharing" class="hover:text-white ease-in duration-300">
+                    <svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M836.136692 0h-127.975005l-191.962507 143.97188 60.588166 45.391135c7.298574-2.09959 14.297208-5.598906 20.495997-10.198008L836.136692 0z" fill="#8C9EFF" /><path d="M192.062488 160.168717v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h511.90002c35.293107 0 63.987502-28.694396 63.987502-63.987502V160.168717c0-35.293107-28.694396-63.987502-63.987502-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502z m479.906268 63.987502H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h319.937512c17.696544 0 31.993751 14.297208 31.993751 31.993751s-14.297208 31.993751-31.993751 31.993751z" fill="#3D5AFE" /><path d="M703.962507 512.09998c0-109.678578-39.392306-210.058973-104.779535-287.943761H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h181.164616c-33.393478-26.294864-70.486233-47.990627-110.578402-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h166.567468C587.485257 861.931654 703.962507 700.663152 703.962507 512.09998z" fill="#536DFE" /><path d="M324.136692 0h-127.975005l238.95333 179.165007c6.198789 4.599102 13.097442 8.098418 20.495996 10.198008 5.698887 1.699668 11.597735 2.499512 17.596564 2.599492h85.583284c6.098809 0 12.097637-0.899824 17.896505-2.599492L324.136692 0z" fill="#FFEA00" /><path d="M416.018746 448.312439a119.976567 95.981254 90 1 0 191.962508 0 119.976567 95.981254 90 1 0-191.962508 0Z" fill="#FFEA00" /><path d="M617.67936 799.843781c115.177504 0 131.674282-53.289592 35.793009-117.077134-40.492091-26.894747-89.182582-42.591681-141.472369-42.591681s-100.880297 15.696934-141.472369 42.591681c-95.981254 63.787541-79.384495 117.077133 35.793009 117.077134h211.35872z" fill="#FFEA00" /></svg>
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 52px; font-size: larger;">Resume</span>
+
+                </li>
+
+              </ul>
+              <a
+                href="mailto:devanshumahapatra17@gmail.com"
+                class="mt-11 flex items-center justify-center gap-1.5 font-medium text-white p-3 rounded-lg transition-all ease-in-out duration-300 relative pricing-button-gradient hover:shadow-button"
+              >
+                Contact me
+                <svg
+                  width="17"
+                  height="16"
+                  viewBox="0 0 17 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.8992 7.5999L9.72422 2.3499C9.49922 2.1249 9.14922 2.1249 8.92422 2.3499C8.69922 2.5749 8.69922 2.9249 8.92422 3.1499L13.1242 7.4249H2.49922C2.19922 7.4249 1.94922 7.6749 1.94922 7.9749C1.94922 8.2749 2.19922 8.5499 2.49922 8.5499H13.1742L8.92422 12.8749C8.69922 13.0999 8.69922 13.4499 8.92422 13.6749C9.02422 13.7749 9.17422 13.8249 9.32422 13.8249C9.47422 13.8249 9.62422 13.7749 9.72422 13.6499L14.8992 8.3999C15.1242 8.1749 15.1242 7.8249 14.8992 7.5999Z"
+                    fill="white"
+                  />
+                </svg>
+              </a>
+
+              <div
+                class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+              >
+                <span class="absolute left-0 bottom-0 -z-1">
+                  <img src="{{url_for('api.static', filename='images/blur-16.svg')}}" alt="blur" class="max-w-none" />
+                </span>
+                <span class="absolute left-0 top-0 -z-1">
+                  <img src="{{url_for('api.static', filename='images/blur-17.svg')}}" alt="blur" class="max-w-none" />
+                </span>
+              </div>
+            </div>
+            
+      <!-------------------------------------------2nd Card---------------------------------------------------->
+      <div class="wow fadeInUp rounded-3xl bg-dark relative z-20 overflow-hidden pt-12.5 pb-10 px-8 xl:px-10 pricing-item-border">
+        <div class="mb-6 overflow-hidden rounded-full mx-auto" style="width: 200px; height: 200px; background: rgb(12, 3, 33); background: linear-gradient(90deg, rgba(12, 3, 33, 1) 0%, rgba(44, 29, 98, 1) 48%, rgba(12, 3, 33, 1) 100%);">
+            <img src="{{url_for('api.static', filename='images/nishank.jpeg')}}" alt="image" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 0 auto;" />
+        </div>
+              <div class="my-10 w-full h-[1px] pricing-gradient-divider"></div>
+              <ul class="flex flex-col gap-4">
+                <h3 class="font-semibold text-heading-6 text-white mb-5.5">
+                  Nishank Jain
+                </h3>
+                <li class="flex items-center gap-5">
+                  <a href="https://github.com/NishankJain03" class="hover:text-white ease-in duration-300">
+                    <svg
+                      class="fill-current"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_368_11839)">
+                        <path
+                          d="M12 0.674805C5.625 0.674805 0.375 5.8498 0.375 12.2998C0.375 17.3998 3.7125 21.7498 8.3625 23.3248C8.9625 23.4373 9.15 23.0623 9.15 22.7998C9.15 22.5373 9.15 21.7873 9.1125 20.7748C5.8875 21.5248 5.2125 19.1998 5.2125 19.1998C4.6875 17.8873 3.9 17.5123 3.9 17.5123C2.85 16.7623 3.9375 16.7623 3.9375 16.7623C5.1 16.7998 5.7375 17.9623 5.7375 17.9623C6.75 19.7623 8.475 19.2373 9.1125 18.8998C9.225 18.1498 9.525 17.6248 9.8625 17.3248C7.3125 17.0623 4.575 16.0498 4.575 11.6248C4.575 10.3498 5.0625 9.3373 5.775 8.5498C5.6625 8.2873 5.25 7.0873 5.8875 5.4748C5.8875 5.4748 6.9 5.1748 9.1125 6.6748C10.05 6.4123 11.025 6.2623 12.0375 6.2623C13.05 6.2623 14.0625 6.3748 14.9625 6.6748C17.175 5.2123 18.15 5.4748 18.15 5.4748C18.7875 7.0498 18.4125 8.2873 18.2625 8.5498C19.0125 9.3373 19.4625 10.3873 19.4625 11.6248C19.4625 16.0498 16.725 17.0623 14.175 17.3248C14.5875 17.6998 14.9625 18.4498 14.9625 19.4998C14.9625 21.0748 14.925 22.3123 14.925 22.6873C14.925 22.9873 15.15 23.3248 15.7125 23.2123C20.2875 21.6748 23.625 17.3623 23.625 12.2248C23.5875 5.8498 18.375 0.674805 12 0.674805Z"
+                          fill=""
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_368_11839">
+                          <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 58px; font-size: larger;">Github</span>
+                </li>
+                <li class="flex items-center gap-5">
+                  <a href="https://www.linkedin.com/in/nishank-jain-b16b52249/" class="hover:text-white ease-in duration-300">
+                    <svg width="25px" height="25px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
+
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 50px; font-size: larger;">LinkedIn</span>
+                </li>
+                <li class="flex items-center gap-5">
+                  <a href="https://drive.google.com/file/d/1vKMS7x9rzocq6cJLJKWA1P0z0tVFY8Xv/view" class="hover:text-white ease-in duration-300">
+                    <svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M836.136692 0h-127.975005l-191.962507 143.97188 60.588166 45.391135c7.298574-2.09959 14.297208-5.598906 20.495997-10.198008L836.136692 0z" fill="#8C9EFF" /><path d="M192.062488 160.168717v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h511.90002c35.293107 0 63.987502-28.694396 63.987502-63.987502V160.168717c0-35.293107-28.694396-63.987502-63.987502-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502z m479.906268 63.987502H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h319.937512c17.696544 0 31.993751 14.297208 31.993751 31.993751s-14.297208 31.993751-31.993751 31.993751z" fill="#3D5AFE" /><path d="M703.962507 512.09998c0-109.678578-39.392306-210.058973-104.779535-287.943761H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h181.164616c-33.393478-26.294864-70.486233-47.990627-110.578402-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h166.567468C587.485257 861.931654 703.962507 700.663152 703.962507 512.09998z" fill="#536DFE" /><path d="M324.136692 0h-127.975005l238.95333 179.165007c6.198789 4.599102 13.097442 8.098418 20.495996 10.198008 5.698887 1.699668 11.597735 2.499512 17.596564 2.599492h85.583284c6.098809 0 12.097637-0.899824 17.896505-2.599492L324.136692 0z" fill="#FFEA00" /><path d="M416.018746 448.312439a119.976567 95.981254 90 1 0 191.962508 0 119.976567 95.981254 90 1 0-191.962508 0Z" fill="#FFEA00" /><path d="M617.67936 799.843781c115.177504 0 131.674282-53.289592 35.793009-117.077134-40.492091-26.894747-89.182582-42.591681-141.472369-42.591681s-100.880297 15.696934-141.472369 42.591681c-95.981254 63.787541-79.384495 117.077133 35.793009 117.077134h211.35872z" fill="#FFEA00" /></svg>
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 52px; font-size: larger;">Resume</span>
+
+                </li>
+
+              </ul>
+              <a
+                href="mailto:nishankjain122@gmail.com"
+                class="mt-11 flex items-center justify-center gap-1.5 font-medium text-white p-3 rounded-lg transition-all ease-in-out duration-300 relative pricing-button-gradient hover:shadow-button"
+              >
+                Contact me
+                <svg
+                  width="17"
+                  height="16"
+                  viewBox="0 0 17 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.8992 7.5999L9.72422 2.3499C9.49922 2.1249 9.14922 2.1249 8.92422 2.3499C8.69922 2.5749 8.69922 2.9249 8.92422 3.1499L13.1242 7.4249H2.49922C2.19922 7.4249 1.94922 7.6749 1.94922 7.9749C1.94922 8.2749 2.19922 8.5499 2.49922 8.5499H13.1742L8.92422 12.8749C8.69922 13.0999 8.69922 13.4499 8.92422 13.6749C9.02422 13.7749 9.17422 13.8249 9.32422 13.8249C9.47422 13.8249 9.62422 13.7749 9.72422 13.6499L14.8992 8.3999C15.1242 8.1749 15.1242 7.8249 14.8992 7.5999Z"
+                    fill="white"
+                  />
+                </svg>
+              </a>
+
+              <div
+                class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+              >
+                <span class="absolute left-0 bottom-0 -z-1">
+                  <img src="{{url_for('api.static', filename='images/blur-16.svg')}}" alt="blur" class="max-w-none" />
+                </span>
+                <span class="absolute left-0 top-0 -z-1">
+                  <img src="{{url_for('api.static', filename='images/blur-17.svg')}}" alt="blur" class="max-w-none" />
+                </span>
+              </div>
+            </div>
+
+          <!-------------------------------------------3nd Card---------------------------------------------------->
+
+          <div class="wow fadeInUp rounded-3xl bg-dark relative z-20 overflow-hidden pt-12.5 pb-10 px-8 xl:px-10 pricing-item-border">
+            <div class="mb-6 overflow-hidden rounded-full mx-auto" style="width: 200px; height: 200px; background: rgb(12, 3, 33); background: linear-gradient(90deg, rgba(12, 3, 33, 1) 0%, rgba(44, 29, 98, 1) 48%, rgba(12, 3, 33, 1) 100%);">
+                <img src="{{url_for('api.static', filename='images/shubu.jpeg')}}" alt="image" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 0 auto;" />
+            </div>
+              <div class="my-10 w-full h-[1px] pricing-gradient-divider"></div>
+              <ul class="flex flex-col gap-4">
+                <h3 class="font-semibold text-heading-6 text-white mb-5.5">
+                  Subhashish Mahapatra
+                </h3>
+                <li class="flex items-center gap-5">
+                  <a href="https://github.com/SubhashishMahapatra" class="hover:text-white ease-in duration-300">
+                    <svg
+                      class="fill-current"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_368_11839)">
+                        <path
+                          d="M12 0.674805C5.625 0.674805 0.375 5.8498 0.375 12.2998C0.375 17.3998 3.7125 21.7498 8.3625 23.3248C8.9625 23.4373 9.15 23.0623 9.15 22.7998C9.15 22.5373 9.15 21.7873 9.1125 20.7748C5.8875 21.5248 5.2125 19.1998 5.2125 19.1998C4.6875 17.8873 3.9 17.5123 3.9 17.5123C2.85 16.7623 3.9375 16.7623 3.9375 16.7623C5.1 16.7998 5.7375 17.9623 5.7375 17.9623C6.75 19.7623 8.475 19.2373 9.1125 18.8998C9.225 18.1498 9.525 17.6248 9.8625 17.3248C7.3125 17.0623 4.575 16.0498 4.575 11.6248C4.575 10.3498 5.0625 9.3373 5.775 8.5498C5.6625 8.2873 5.25 7.0873 5.8875 5.4748C5.8875 5.4748 6.9 5.1748 9.1125 6.6748C10.05 6.4123 11.025 6.2623 12.0375 6.2623C13.05 6.2623 14.0625 6.3748 14.9625 6.6748C17.175 5.2123 18.15 5.4748 18.15 5.4748C18.7875 7.0498 18.4125 8.2873 18.2625 8.5498C19.0125 9.3373 19.4625 10.3873 19.4625 11.6248C19.4625 16.0498 16.725 17.0623 14.175 17.3248C14.5875 17.6998 14.9625 18.4498 14.9625 19.4998C14.9625 21.0748 14.925 22.3123 14.925 22.6873C14.925 22.9873 15.15 23.3248 15.7125 23.2123C20.2875 21.6748 23.625 17.3623 23.625 12.2248C23.5875 5.8498 18.375 0.674805 12 0.674805Z"
+                          fill=""
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_368_11839">
+                          <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 58px; font-size: larger;">Github</span>
+                </li>
+                <li class="flex items-center gap-5">
+                  <a href="https://www.linkedin.com/in/subhashish-mahapatra-b8a523226/" class="hover:text-white ease-in duration-300">
+                    <svg width="25px" height="25px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
+
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 50px; font-size: larger;">LinkedIn</span>
+                </li>
+                <li class="flex items-center gap-5">
+                  <a href="https://drive.google.com/file/d/1sjwA1sR2FEykV-tXfULVlulWWd508vIP/view" class="hover:text-white ease-in duration-300">
+                    <svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M836.136692 0h-127.975005l-191.962507 143.97188 60.588166 45.391135c7.298574-2.09959 14.297208-5.598906 20.495997-10.198008L836.136692 0z" fill="#8C9EFF" /><path d="M192.062488 160.168717v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h511.90002c35.293107 0 63.987502-28.694396 63.987502-63.987502V160.168717c0-35.293107-28.694396-63.987502-63.987502-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502z m479.906268 63.987502H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h319.937512c17.696544 0 31.993751 14.297208 31.993751 31.993751s-14.297208 31.993751-31.993751 31.993751z" fill="#3D5AFE" /><path d="M703.962507 512.09998c0-109.678578-39.392306-210.058973-104.779535-287.943761H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h181.164616c-33.393478-26.294864-70.486233-47.990627-110.578402-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h166.567468C587.485257 861.931654 703.962507 700.663152 703.962507 512.09998z" fill="#536DFE" /><path d="M324.136692 0h-127.975005l238.95333 179.165007c6.198789 4.599102 13.097442 8.098418 20.495996 10.198008 5.698887 1.699668 11.597735 2.499512 17.596564 2.599492h85.583284c6.098809 0 12.097637-0.899824 17.896505-2.599492L324.136692 0z" fill="#FFEA00" /><path d="M416.018746 448.312439a119.976567 95.981254 90 1 0 191.962508 0 119.976567 95.981254 90 1 0-191.962508 0Z" fill="#FFEA00" /><path d="M617.67936 799.843781c115.177504 0 131.674282-53.289592 35.793009-117.077134-40.492091-26.894747-89.182582-42.591681-141.472369-42.591681s-100.880297 15.696934-141.472369 42.591681c-95.981254 63.787541-79.384495 117.077133 35.793009 117.077134h211.35872z" fill="#FFEA00" /></svg>
+                  </a>
+                  <span style="font-weight: bolder; padding-left: 52px; font-size: larger;">Resume</span>
+
+                </li>
+
+              </ul>
+              <a
+                href="mailto:20104049.subhashishmahapatra@gmail.com"
+                class="mt-11 flex items-center justify-center gap-1.5 font-medium text-white p-3 rounded-lg transition-all ease-in-out duration-300 relative pricing-button-gradient hover:shadow-button"
+              >
+                Contact me
+                <svg
+                  width="17"
+                  height="16"
+                  viewBox="0 0 17 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.8992 7.5999L9.72422 2.3499C9.49922 2.1249 9.14922 2.1249 8.92422 2.3499C8.69922 2.5749 8.69922 2.9249 8.92422 3.1499L13.1242 7.4249H2.49922C2.19922 7.4249 1.94922 7.6749 1.94922 7.9749C1.94922 8.2749 2.19922 8.5499 2.49922 8.5499H13.1742L8.92422 12.8749C8.69922 13.0999 8.69922 13.4499 8.92422 13.6749C9.02422 13.7749 9.17422 13.8249 9.32422 13.8249C9.47422 13.8249 9.62422 13.7749 9.72422 13.6499L14.8992 8.3999C15.1242 8.1749 15.1242 7.8249 14.8992 7.5999Z"
+                    fill="white"
+                  />
+                </svg>
+              </a>
+
+              <div
+                class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+              >
+                <span class="absolute left-0 bottom-0 -z-1">
+                  <img src="{{url_for('api.static', filename='images/blur-16.svg')}}" alt="blur" class="max-w-none" />
+                </span>
+                <span class="absolute left-0 top-0 -z-1">
+                  <img src="{{url_for('api.static', filename='images/blur-17.svg')}}" alt="blur" class="max-w-none" />
+                </span>
+              </div>
+            </div>
+
+                      <!-------------------------------------------4th Card---------------------------------------------------->
+
+<br />
+<div class="center-last-card">
+
+  <div class="wow fadeInUp rounded-3xl bg-dark relative z-20 overflow-hidden pt-12.5 pb-10 px-8 xl:px-10 pricing-item-border">
+    <div class="mb-6 overflow-hidden rounded-full mx-auto" style="width: 200px; height: 200px; background: rgb(12, 3, 33); background: linear-gradient(90deg, rgba(12, 3, 33, 1) 0%, rgba(44, 29, 98, 1) 48%, rgba(12, 3, 33, 1) 100%);">
+        <img src="{{url_for('api.static', filename='images/athul.jpg')}}" alt="image" style="width: 200px; height: 200px; border-radius: 50%; display: block; margin: 0 auto;" />
+    </div>
+          <div class="my-10 w-full h-[1px] pricing-gradient-divider"></div>
+          <ul class="flex flex-col gap-4">
+            <h3 class="font-semibold text-heading-6 text-white mb-5.5">
+              Athul Nair
+            </h3>
+            <li class="flex items-center gap-5">
+              <a href="https://github.com/athulnairrr" class="hover:text-white ease-in duration-300">
+                <svg
+                  class="fill-current"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_368_11839)">
+                    <path
+                      d="M12 0.674805C5.625 0.674805 0.375 5.8498 0.375 12.2998C0.375 17.3998 3.7125 21.7498 8.3625 23.3248C8.9625 23.4373 9.15 23.0623 9.15 22.7998C9.15 22.5373 9.15 21.7873 9.1125 20.7748C5.8875 21.5248 5.2125 19.1998 5.2125 19.1998C4.6875 17.8873 3.9 17.5123 3.9 17.5123C2.85 16.7623 3.9375 16.7623 3.9375 16.7623C5.1 16.7998 5.7375 17.9623 5.7375 17.9623C6.75 19.7623 8.475 19.2373 9.1125 18.8998C9.225 18.1498 9.525 17.6248 9.8625 17.3248C7.3125 17.0623 4.575 16.0498 4.575 11.6248C4.575 10.3498 5.0625 9.3373 5.775 8.5498C5.6625 8.2873 5.25 7.0873 5.8875 5.4748C5.8875 5.4748 6.9 5.1748 9.1125 6.6748C10.05 6.4123 11.025 6.2623 12.0375 6.2623C13.05 6.2623 14.0625 6.3748 14.9625 6.6748C17.175 5.2123 18.15 5.4748 18.15 5.4748C18.7875 7.0498 18.4125 8.2873 18.2625 8.5498C19.0125 9.3373 19.4625 10.3873 19.4625 11.6248C19.4625 16.0498 16.725 17.0623 14.175 17.3248C14.5875 17.6998 14.9625 18.4498 14.9625 19.4998C14.9625 21.0748 14.925 22.3123 14.925 22.6873C14.925 22.9873 15.15 23.3248 15.7125 23.2123C20.2875 21.6748 23.625 17.3623 23.625 12.2248C23.5875 5.8498 18.375 0.674805 12 0.674805Z"
+                      fill=""
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_368_11839">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+              <span style="font-weight: bolder; padding-left: 58px; font-size: larger;">Github</span>
+            </li>
+            <li class="flex items-center gap-5">
+              <a href="https://www.linkedin.com/in/athul-nair-40768918b" class="hover:text-white ease-in duration-300">
+                <svg width="25px" height="25px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
+
+              </a>
+              <span style="font-weight: bolder; padding-left: 50px; font-size: larger;">LinkedIn</span>
+            </li>
+            <li class="flex items-center gap-5">
+              <a href="https://drive.google.com/file/d/1Rz7pklueReo-lhX6yY3TWHLQwlD1GnFB/view?usp=sharing" class="hover:text-white ease-in duration-300">
+                <svg width="25px" height="25px" viewBox="0 0 1024 1024" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M836.136692 0h-127.975005l-191.962507 143.97188 60.588166 45.391135c7.298574-2.09959 14.297208-5.598906 20.495997-10.198008L836.136692 0z" fill="#8C9EFF" /><path d="M192.062488 160.168717v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h511.90002c35.293107 0 63.987502-28.694396 63.987502-63.987502V160.168717c0-35.293107-28.694396-63.987502-63.987502-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502z m479.906268 63.987502H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h319.937512c17.696544 0 31.993751 14.297208 31.993751 31.993751s-14.297208 31.993751-31.993751 31.993751z" fill="#3D5AFE" /><path d="M703.962507 512.09998c0-109.678578-39.392306-210.058973-104.779535-287.943761H352.031244c-17.696544 0-31.993751-14.297208-31.993751-31.993751s14.297208-31.993751 31.993751-31.993751h181.164616c-33.393478-26.294864-70.486233-47.990627-110.578402-63.987502H256.04999c-35.293107 0-63.987502 28.694396-63.987502 63.987502v703.862527c0 35.293107 28.694396 63.987502 63.987502 63.987502h166.567468C587.485257 861.931654 703.962507 700.663152 703.962507 512.09998z" fill="#536DFE" /><path d="M324.136692 0h-127.975005l238.95333 179.165007c6.198789 4.599102 13.097442 8.098418 20.495996 10.198008 5.698887 1.699668 11.597735 2.499512 17.596564 2.599492h85.583284c6.098809 0 12.097637-0.899824 17.896505-2.599492L324.136692 0z" fill="#FFEA00" /><path d="M416.018746 448.312439a119.976567 95.981254 90 1 0 191.962508 0 119.976567 95.981254 90 1 0-191.962508 0Z" fill="#FFEA00" /><path d="M617.67936 799.843781c115.177504 0 131.674282-53.289592 35.793009-117.077134-40.492091-26.894747-89.182582-42.591681-141.472369-42.591681s-100.880297 15.696934-141.472369 42.591681c-95.981254 63.787541-79.384495 117.077133 35.793009 117.077134h211.35872z" fill="#FFEA00" /></svg>
+              </a>
+              <span style="font-weight: bolder; padding-left: 52px; font-size: larger;">Resume</span>
+
+            </li>
+
+          </ul>
+          <a
+            href="mailto:athulnair8101@gmail.com"
+            class="mt-11 flex items-center justify-center gap-1.5 font-medium text-white p-3 rounded-lg transition-all ease-in-out duration-300 relative pricing-button-gradient hover:shadow-button"
+          >
+            Contact me
+            <svg
+              width="17"
+              height="16"
+              viewBox="0 0 17 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14.8992 7.5999L9.72422 2.3499C9.49922 2.1249 9.14922 2.1249 8.92422 2.3499C8.69922 2.5749 8.69922 2.9249 8.92422 3.1499L13.1242 7.4249H2.49922C2.19922 7.4249 1.94922 7.6749 1.94922 7.9749C1.94922 8.2749 2.19922 8.5499 2.49922 8.5499H13.1742L8.92422 12.8749C8.69922 13.0999 8.69922 13.4499 8.92422 13.6749C9.02422 13.7749 9.17422 13.8249 9.32422 13.8249C9.47422 13.8249 9.62422 13.7749 9.72422 13.6499L14.8992 8.3999C15.1242 8.1749 15.1242 7.8249 14.8992 7.5999Z"
+                fill="white"
+              />
+            </svg>
+          </a>
+
+          <div
+            class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+          >
+            <span class="absolute left-0 bottom-0 -z-1">
+              <img src="{{url_for('api.static', filename='images/blur-16.svg')}}" alt="blur" class="max-w-none" />
+            </span>
+            <span class="absolute left-0 top-0 -z-1">
+              <img src="{{url_for('api.static', filename='images/blur-17.svg')}}" alt="blur" class="max-w-none" />
+            </span>
+          </div>
+        </div>
+
+    <!-------------------------------------------Card Ends---------------------------------------------------->
+</div>
+        
+        </div>
+      </section>
+
+      <section class="py-19">
+        <div class="max-w-[1104px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div class="relative overflow-hidden z-10">
+            <span
+              class="max-w-[128px] w-full h-[37px] block inset-0 pointer-events-none absolute z-10 left-0 top-1/2 -translate-y-1/2 bg-gradient-to-l from-dark/0 to-dark/100"
+            ></span>
+            <span
+              class="max-w-[128px] w-full h-[37px] block inset-0 pointer-events-none absolute z-10 left-auto top-1/2 -translate-y-1/2 bg-gradient-to-r from-dark/0 to-dark/100"
+            ></span>
+            
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="support" class="scroll-mt-17">
+        <div class="max-w-[1104px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div
+            class="relative z-999 overflow-hidden rounded-[30px] bg-dark pt-25 px-4 sm:px-20 lg:px-27.5"
+          >
+            <div
+              class="flex justify-center gap-7.5 absolute left-1/2 -translate-x-1/2 -top-[16%] max-w-[690px] w-full -z-1 opacity-40"
+            >
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border bottom-12"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border bottom-7"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border bottom-3"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border bottom-2"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border bottom-5"
+              ></div>
+              <div
+                class="max-w-[50px] w-full h-[250px] relative pricing-grid pricing-grid-border bottom-8"
+              ></div>
+            </div>
+
+            <div
+              class="max-w-[482px] w-full h-60 overflow-hidden absolute -z-1 -top-30 left-1/2 -translate-x-1/2"
+            >
+              <div class="stars"></div>
+              <div class="stars2"></div>
+            </div>
+
+            <div
+              class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+            >
+              <span class="absolute left-1/2 top-0 -translate-x-1/2 -z-1">
+                <img src="{{url_for('api.static', filename='images/blur-19.svg')}}" alt="blur" class="max-w-none" />
+              </span>
+              <span class="absolute left-1/2 top-0 -translate-x-1/2 -z-1">
+                <img src="{{url_for('api.static', filename='images/blur-20.svg')}}" alt="blur" class="max-w-none" />
+              </span>
+              <span class="absolute left-1/2 top-0 -translate-x-1/2 -z-1">
+                <img src="{{url_for('api.static', filename='images/blur-21.svg')}}" alt="blur" class="max-w-none" />
+              </span>
+            </div>
+
+            <div class="wow fadeInUp mb-16 text-center relative z-999">
+              <span
+                class="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+              >
+                <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+                <span class="hero-subtitle-text"> Need Any Help? </span>
+              </span>
+              <h2
+                class="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2"
+              >
+                Connect with Us
+              </h2>
+              <p class="max-w-[714px] mx-auto font-medium">
+                Get a handle on mental health, for your whole team.
+              </p>
+            </div>
+
+            <div
+              class="form-box-gradient relative overflow-hidden rounded-[25px] bg-dark p-6 sm:p-8 xl:p-15"
+            >
+              <form class="relative z-10" id="myForm">
+                <div class="-mx-4 xl:-mx-10 flex flex-wrap">
+                  <div class="w-full px-4 xl:px-5 md:w-1/2">
+                    <div class="mb-9.5">
+                      <label
+                        for="name"
+                        class="text-white mb-2.5 block font-medium"
+                      >
+                        Name
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        name="to_name"
+                        placeholder="Enter your Name"
+                        class="rounded-lg border border-white/[0.12] bg-white/[0.05] focus:border-purple w-full py-3 px-6 outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full px-4 xl:px-5 md:w-1/2">
+                    <div class="mb-9.5">
+                      <label
+                        for="email"
+                        class="text-white mb-2.5 block font-medium"
+                      >
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        name="from_name"
+                        placeholder="Enter your Email"
+                        class="rounded-lg border border-white/[0.12] bg-white/[0.05] focus:border-purple w-full py-3 px-6 outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div class="w-full px-4 xl:px-5">
+                    <div class="mb-10">
+                      <label
+                        for="message"
+                        class="text-white mb-2.5 block font-medium"
+                      >
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Type your message"
+                        rows="6"
+                        class="rounded-lg border border-white/[0.12] bg-white/[0.05] focus:border-purple w-full py-5 px-6 outline-none"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="w-full px-4 xl:px-5">
+                    <div class="text-center">
+                      <button type="submit" class="hero-button-gradient inline-flex rounded-lg py-3 px-7 text-white font-medium ease-in duration-300 hover:opacity-80">
+                          Send Message
+                      </button>
+                  </div>
+                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#myForm').on('submit', function(event) {
+        event.preventDefault(); // prevent reload
+        
+        var formData = new FormData(this);
+        formData.append('service_id', 'service_vrc0xaa');
+        formData.append('template_id', 'template_to7w0ir');
+        formData.append('user_id', 'hYQt0SjiMCa70QjEI');
+     
+        $.ajax('https://api.emailjs.com/api/v1.0/email/send-form', {
+            type: 'POST',
+            data: formData,
+            contentType: false, // auto-detection
+            processData: false // no need to parse formData to string
+        }).done(function() {
+            alert('Your mail is sent!');
+        }).fail(function(error) {
+            alert('Oops... ' + JSON.stringify(error));
+        });
+    });
+</script>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 lg:py-25" id="blog">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div class="wow fadeInUp mb-16 text-center">
+            <span
+              class="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+            >
+              <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+              <span class="hero-subtitle-text"> Read Our Latest Blogs </span>
+            </span>
+            <h2
+              class="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2"
+            >
+              Latest Blogs & News
+            </h2>
+            <p class="max-w-[714px] mx-auto font-medium">
+              Our AI writing tool is designed to empower you with exceptional
+              writing capabilities, making the writing process more efficient,
+              accurate, and enjoyable.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-7.5">
+            <div class="wow fadeInUp group">
+              <div class="mb-6 overflow-hidden rounded-xl">
+                <img
+                  src="{{url_for('api.static', filename='images/blog-main.png')}}"
+                  alt="image"
+                  class="ease-linear w-full duration-500 scale-100 group-hover:scale-125"
+                />
+              </div>
+              <div class="flex flex-wrap gap-2.5 items-center mb-4.5">
+                <span
+                  class="font-medium text-xs hover:text-white cursor-pointer py-[3px] px-2.5 rounded-full bg-white/[0.07] border border-white/10 hover:border-white/25 ease-out duration-300"
+                >
+                  Design
+                </span>
+                <span
+                  class="font-medium text-xs hover:text-white cursor-pointer py-[3px] px-2.5 rounded-full bg-white/[0.07] border border-white/10 hover:border-white/25 ease-out duration-300"
+                >
+                  Engineering
+                </span>
+              </div>
+              <h4>
+                <a
+                  href="https://dev.to/devanshu17/listenai-elevate-your-health-journey-with-our-caring-ai-chatbot-companion-2i40"
+                  class="text-white font-semibold text-xl ease-in duration-300 hover:opacity-80"
+                >
+                  How ListenAI was built from the ground up
+                </a>
+              </h4>
+              <p class="font-medium mt-4">
+                ListenAI was developed by us at APSIT, a team of 4 students, for the
+                IBM Hack Challenge 2023. We were given the task of creating a mental
+                health assistant chatbot that could help people with their mental health issues.
+              </p>
+              <div class="flex items-center gap-4.5 flex-wrap mt-6">
+                <div
+                  class="flex items-center gap-2 flex-wrap cursor-pointer ease-in duration-300 hover:text-white"
+                >
+                  <svg
+                    class="fill-current"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 8.75C7.65625 8.75 5.78125 6.90625 5.78125 4.65625C5.78125 2.40625 7.65625 0.5625 10 0.5625C12.3438 0.5625 14.2188 2.40625 14.2188 4.65625C14.2188 6.90625 12.3438 8.75 10 8.75ZM10 1.96875C8.4375 1.96875 7.1875 3.1875 7.1875 4.65625C7.1875 6.125 8.4375 7.34375 10 7.34375C11.5625 7.34375 12.8125 6.125 12.8125 4.65625C12.8125 3.1875 11.5625 1.96875 10 1.96875Z"
+                      fill=""
+                    />
+                    <path
+                      d="M16.5938 19.4688C16.2188 19.4688 15.875 19.1562 15.875 18.75V17.8438C15.875 14.5938 13.25 11.9688 10 11.9688C6.75 11.9688 4.125 14.5938 4.125 17.8438V18.75C4.125 19.125 3.8125 19.4688 3.40625 19.4688C3 19.4688 2.6875 19.1562 2.6875 18.75V17.8438C2.6875 13.8125 5.96875 10.5625 9.96875 10.5625C13.9688 10.5625 17.25 13.8437 17.25 17.8438V18.75C17.2813 19.125 16.9688 19.4688 16.5938 19.4688Z"
+                      fill=""
+                    />
+                  </svg>
+                  <span class="text-sm font-medium">Devanshu Mahapatra</span>
+                </div>
+                <div
+                  class="flex items-center gap-2 flex-wrap cursor-pointer ease-in duration-300 hover:text-white"
+                >
+                  <svg
+                    class="fill-current"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.5 3.3125H15.875V2.625C15.875 2.25 15.5625 1.90625 15.1562 1.90625C14.75 1.90625 14.4375 2.21875 14.4375 2.625V3.3125H5.53125V2.625C5.53125 2.25 5.21875 1.90625 4.8125 1.90625C4.40625 1.90625 4.09375 2.21875 4.09375 2.625V3.3125H2.5C1.4375 3.3125 0.53125 4.1875 0.53125 5.28125V16.1563C0.53125 17.2188 1.40625 18.125 2.5 18.125H17.5C18.5625 18.125 19.4687 17.25 19.4687 16.1563V5.25C19.4687 4.1875 18.5625 3.3125 17.5 3.3125ZM1.96875 9.125H4.625V12.2188H1.96875V9.125ZM6.03125 9.125H9.3125V12.2188H6.03125V9.125ZM9.3125 13.625V16.6875H6.03125V13.625H9.3125ZM10.7187 13.625H14V16.6875H10.7187V13.625ZM10.7187 12.2188V9.125H14V12.2188H10.7187ZM15.375 9.125H18.0312V12.2188H15.375V9.125ZM2.5 4.71875H4.125V5.375C4.125 5.75 4.4375 6.09375 4.84375 6.09375C5.25 6.09375 5.5625 5.78125 5.5625 5.375V4.71875H14.5V5.375C14.5 5.75 14.8125 6.09375 15.2187 6.09375C15.625 6.09375 15.9375 5.78125 15.9375 5.375V4.71875H17.5C17.8125 4.71875 18.0625 4.96875 18.0625 5.28125V7.71875H1.96875V5.28125C1.96875 4.96875 2.1875 4.71875 2.5 4.71875ZM1.96875 16.125V13.5938H4.625V16.6563H2.5C2.1875 16.6875 1.96875 16.4375 1.96875 16.125ZM17.5 16.6875H15.375V13.625H18.0312V16.1563C18.0625 16.4375 17.8125 16.6875 17.5 16.6875Z"
+                      fill=""
+                    />
+                  </svg>
+                  <span class="text-sm font-medium">30 Aug, 2023</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wow fadeInUp group">
+              <div class="mb-6 overflow-hidden rounded-xl">
+                <img
+                  src="{{url_for('api.static', filename='images/video.png')}}"
+                  alt="image"
+                  class="ease-linear w-full duration-500 scale-100 group-hover:scale-125"
+                />
+              </div>
+              <div class="flex flex-wrap gap-2.5 items-center mb-4.5">
+                <span
+                  class="font-medium text-xs hover:text-white cursor-pointer py-[3px] px-2.5 rounded-full bg-white/[0.07] border border-white/10 hover:border-white/25 ease-out duration-300"
+                >
+                  Products
+                </span>
+                <span
+                  class="font-medium text-xs hover:text-white cursor-pointer py-[3px] px-2.5 rounded-full bg-white/[0.07] border border-white/10 hover:border-white/25 ease-out duration-300"
+                >
+                  Demo
+                </span>
+              </div>
+              <h4>
+                <a
+                  href="https://www.youtube.com/watch?v=6bDxfUewpho"
+                  class="text-white font-semibold text-xl ease-in duration-300 hover:opacity-80"
+                >
+                  Watch the demo video
+                </a>
+              </h4>
+              <p class="font-medium mt-4">
+                Check out the demo video here and learn more about ListenAI
+                and its features. This video will help you understand how
+                ListenAI works and how it can help you.
+
+              </p>
+              <div class="flex items-center gap-4.5 flex-wrap mt-6">
+                <div
+                  class="flex items-center gap-2 flex-wrap cursor-pointer ease-in duration-300 hover:text-white"
+                >
+                  <svg
+                    class="fill-current"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 8.75C7.65625 8.75 5.78125 6.90625 5.78125 4.65625C5.78125 2.40625 7.65625 0.5625 10 0.5625C12.3438 0.5625 14.2188 2.40625 14.2188 4.65625C14.2188 6.90625 12.3438 8.75 10 8.75ZM10 1.96875C8.4375 1.96875 7.1875 3.1875 7.1875 4.65625C7.1875 6.125 8.4375 7.34375 10 7.34375C11.5625 7.34375 12.8125 6.125 12.8125 4.65625C12.8125 3.1875 11.5625 1.96875 10 1.96875Z"
+                      fill=""
+                    />
+                    <path
+                      d="M16.5938 19.4688C16.2188 19.4688 15.875 19.1562 15.875 18.75V17.8438C15.875 14.5938 13.25 11.9688 10 11.9688C6.75 11.9688 4.125 14.5938 4.125 17.8438V18.75C4.125 19.125 3.8125 19.4688 3.40625 19.4688C3 19.4688 2.6875 19.1562 2.6875 18.75V17.8438C2.6875 13.8125 5.96875 10.5625 9.96875 10.5625C13.9688 10.5625 17.25 13.8437 17.25 17.8438V18.75C17.2813 19.125 16.9688 19.4688 16.5938 19.4688Z"
+                      fill=""
+                    />
+                  </svg>
+                  <span class="text-sm font-medium">Devanshu Mahapatra</span>
+                </div>
+                <div
+                  class="flex items-center gap-2 flex-wrap cursor-pointer ease-in duration-300 hover:text-white"
+                >
+                  <svg
+                    class="fill-current"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.5 3.3125H15.875V2.625C15.875 2.25 15.5625 1.90625 15.1562 1.90625C14.75 1.90625 14.4375 2.21875 14.4375 2.625V3.3125H5.53125V2.625C5.53125 2.25 5.21875 1.90625 4.8125 1.90625C4.40625 1.90625 4.09375 2.21875 4.09375 2.625V3.3125H2.5C1.4375 3.3125 0.53125 4.1875 0.53125 5.28125V16.1563C0.53125 17.2188 1.40625 18.125 2.5 18.125H17.5C18.5625 18.125 19.4687 17.25 19.4687 16.1563V5.25C19.4687 4.1875 18.5625 3.3125 17.5 3.3125ZM1.96875 9.125H4.625V12.2188H1.96875V9.125ZM6.03125 9.125H9.3125V12.2188H6.03125V9.125ZM9.3125 13.625V16.6875H6.03125V13.625H9.3125ZM10.7187 13.625H14V16.6875H10.7187V13.625ZM10.7187 12.2188V9.125H14V12.2188H10.7187ZM15.375 9.125H18.0312V12.2188H15.375V9.125ZM2.5 4.71875H4.125V5.375C4.125 5.75 4.4375 6.09375 4.84375 6.09375C5.25 6.09375 5.5625 5.78125 5.5625 5.375V4.71875H14.5V5.375C14.5 5.75 14.8125 6.09375 15.2187 6.09375C15.625 6.09375 15.9375 5.78125 15.9375 5.375V4.71875H17.5C17.8125 4.71875 18.0625 4.96875 18.0625 5.28125V7.71875H1.96875V5.28125C1.96875 4.96875 2.1875 4.71875 2.5 4.71875ZM1.96875 16.125V13.5938H4.625V16.6563H2.5C2.1875 16.6875 1.96875 16.4375 1.96875 16.125ZM17.5 16.6875H15.375V13.625H18.0312V16.1563C18.0625 16.4375 17.8125 16.6875 17.5 16.6875Z"
+                      fill=""
+                    />
+                  </svg>
+                  <span class="text-sm font-medium">30 Aug, 2023</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div
+            class="cta-box-gradient bg-dark rounded-[30px] relative overflow-hidden px-4 py-20 lg:py-25 z-999"
+          >
+            <span class="absolute bottom-0 left-0 -z-1"
+              ><img src="{{url_for('api.static', filename='images/grid.svg')}}" alt="grid"
+            /></span>
+            <div
+              class="absolute -z-10 pointer-events-none inset-0 overflow-hidden"
+            >
+              <span class="absolute left-1/2 bottom-0 -translate-x-1/2 -z-1">
+                <img src="{{url_for('api.static', filename='images/blur-22.svg')}}" alt="blur" class="max-w-none" />
+              </span>
+              <span class="absolute left-1/2 bottom-0 -translate-x-1/2 -z-1">
+                <img src="{{url_for('api.static', filename='images/blur-23.svg')}}" alt="blur" class="max-w-none" />
+              </span>
+              <span class="absolute left-1/2 bottom-0 -translate-x-1/2 -z-1">
+                <img src="{{url_for('api.static', filename='images/blur-24.svg')}}" alt="blur" class="max-w-none" />
+              </span>
+            </div>
+
+            <div
+              class="max-w-[482px] w-full h-60 overflow-hidden absolute -z-1 -bottom-25 left-1/2 -translate-x-1/2"
+            >
+              <div class="stars"></div>
+              <div class="stars2"></div>
+            </div>
+            <div class="wow fadeInUp text-center">
+              <span
+                class="hero-subtitle-gradient relative mb-4 font-medium text-sm inline-flex items-center gap-2 py-2 px-4.5 rounded-full"
+              >
+                <img src="{{url_for('api.static', filename='images/icon-title.svg')}}" alt="icon" />
+                <span class="hero-subtitle-text"> Try our tool for Free </span>
+              </span>
+              <h2
+                class="text-white mb-4.5 text-2xl font-extrabold sm:text-4xl xl:text-heading-2"
+              >
+                What are you waiting for?
+              </h2>
+              <p class="max-w-[714px] mx-auto font-medium mb-9">
+                Our AI-powered healthcare solution is meticulously crafted to empower you with exceptional medical capabilities, making healthcare processes more efficient, accurate, and comforting.
+              </p>
+              <a
+                href="/home/api"
+                class="hero-button-gradient inline-flex rounded-lg py-3 px-7 text-white font-medium ease-in duration-300 hover:opacity-80"
+              >
+                Get Started
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="relative z-10 pb-17.5 lg:pb-22.5 xl:pb-27.5">
+
+      <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0 relative pt-17.5">
+        <div
+          class="w-full h-[1px] footer-divider-gradient absolute top-0 left-0"
+        ></div>
+        <div class="flex flex-wrap justify-between">
+          <div class="mb-10 max-w-[571px] w-full">
+            <a class="mb-8.5 inline-block" href="/">
+              <img src="{{url_for('api.static', filename='images/logo1.svg')}}" alt="logo1" />
+            </a>
+            <p class="mb-12 xl:w-4/5">
+              AI-driven healthcare tool is crafted to equip you with exceptional medical capabilities.
+            </p>
+            
+            <p class="font-medium mt-5.5">
+              ListenAI, LLC. All rights reserved.
+            </p>
+          </div>
+          <div class="max-w-[571px] w-full" style="padding-left: 450px;">
+            <div class="flex items-center gap-5">
+              <a href="https://www.linkedin.com/in/devanshu-mahapatra-05095921a/" class="hover:text-white ease-in duration-300">
+                <svg width="35px" height="35px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#0A66C2" d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14zM4.67 5.715a1.037 1.037 0 01-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032zm.889 6.51h-1.78V6.498h1.78v5.727zM13.11 2H2.885A.88.88 0 002 2.866v10.268a.88.88 0 00.885.866h10.226a.882.882 0 00.889-.866V2.865a.88.88 0 00-.889-.864z"/></svg>
+              </a>
+              <a href="https://github.com/Devanshu-17/" class="hover:text-white ease-in duration-300">
+                <svg width="35px" height="35px" viewBox="-1.65 0 259.3 259.3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+                  <g>
+                      <path fill="#9EDCF2" d="M200.9,199.8c0,13.9-32.2,25.1-71.9,25.1c-39.7,0-71.9-11.3-71.9-25.1c0-13.9,32.2-25.1,71.9-25.1C168.7,174.7,200.9,185.9,200.9,199.8L200.9,199.8z M200.9,199.8" />
+                      <g>
+                          <defs>
+                              <path id="SVGID_1_" d="M98.1,244.8c1.6,7.5,5.5,11.9,9.4,14.5l41.1,0c5-3.4,10.1-9.8,10.1-21.8v-31c0,0,0.6-7.7,7.7-10.2c0,0,4.1-2.9-0.3-4.5c0,0-19.5-1.6-19.5,14.4v23.6c0,0,0.8,8.7-3.8,12.3v-29.2c0,0,0.3-9.3,5.1-12.8c0,0,3.2-5.7-3.8-4.2c0,0-13.4,1.9-14,17.6l-0.3,30h-3.2l-0.3-30c-0.6-15.6-14-17.6-14-17.6c-7-1.6-3.8,4.2-3.8,4.2c4.8,3.5,5.1,12.8,5.1,12.8v29.5c-4.6-3.3-3.8-12.6-3.8-12.6v-23.6c0-16-19.5-14.4-19.5-14.4c-4.5,1.6-0.3,4.5-0.3,4.5c7,2.6,7.7,10.2,7.7,10.2v21.7L98.1,244.8z" />
+                          </defs>
+                          <clipPath id="SVGID_2_">
+                              <use xlink:href="#SVGID_1_" overflow="visible" />
+                          </clipPath>
+                          <path clip-path="url(#SVGID_2_)" fill="#7DBCE7" d="M200.9,199.8c0,13.9-32.2,25.1-71.9,25.1c-39.7,0-71.9-11.3-71.9-25.1c0-13.9,32.2-25.1,71.9-25.1C168.7,174.7,200.9,185.9,200.9,199.8L200.9,199.8z M200.9,199.8" />
+                      </g>
+                      <path fill="#9EDCF2" d="M46.9,125.9l-2.1,7.2c0,0-0.5,2.6,1.9,3.1c2.6-0.1,2.4-2.5,2.2-3.2L46.9,125.9L46.9,125.9z M46.9,125.9" />
+                      <path fill="#010101" d="M255.8,95.6l0.2-0.9c-21.1-4.2-42.7-4.3-55.8-3.7c2.1-7.7,2.8-16.7,2.8-26.6c0-14.3-5.4-25.7-14-34.3c1.5-4.9,3.5-15.8-2-29.7c0,0-9.8-3.1-32.1,11.8c-8.7-2.2-18-3.3-27.3-3.3c-10.2,0-20.5,1.3-30.2,3.9C74.4-2.9,64.3,0.3,64.3,0.3c-6.6,16.5-2.5,28.8-1.3,31.8c-7.8,8.4-12.5,19.1-12.5,32.2c0,9.9,1.1,18.8,3.9,26.5c-13.2-0.5-34-0.3-54.4,3.8l0.2,0.9c20.4-4.1,41.4-4.2,54.5-3.7c0.6,1.6,1.3,3.2,2,4.7c-13,0.4-35.1,2.1-56.3,8.1l0.3,0.9c21.4-6,43.7-7.6,56.6-8c7.8,14.4,23,23.8,50.2,26.7c-3.9,2.6-7.8,7-9.4,14.5c-5.3,2.5-21.9,8.7-31.9-8.5c0,0-5.6-10.2-16.3-11c0,0-10.4-0.2-0.7,6.5c0,0,6.9,3.3,11.7,15.6c0,0,6.3,21,36.4,14.2V177c0,0-0.6,7.7-7.7,10.2c0,0-4.2,2.9,0.3,4.5c0,0,19.5,1.6,19.5-14.4v-23.6c0,0-0.8-9.4,3.8-12.6v38.8c0,0-0.3,9.3-5.1,12.8c0,0-3.2,5.7,3.8,4.2c0,0,13.4-1.9,14-17.6l0.3-39.3h3.2l0.3,39.3c0.6,15.6,14,17.6,14,17.6c7,1.6,3.8-4.2,3.8-4.2c-4.8-3.5-5.1-12.8-5.1-12.8v-38.5c4.6,3.6,3.8,12.3,3.8,12.3v23.6c0,16,19.5,14.4,19.5,14.4c4.5-1.6,0.3-4.5,0.3-4.5c-7-2.6-7.7-10.2-7.7-10.2v-31c0-12.1-5.1-18.5-10.1-21.8c29-2.9,42.9-12.2,49.3-26.8c12.7,0.3,35.6,1.9,57.4,8.1l0.3-0.9c-21.7-6.1-44.4-7.7-57.3-8.1c0.6-1.5,1.1-3,1.6-4.6C212.9,91.4,234.6,91.4,255.8,95.6L255.8,95.6z M255.8,95.6" />
+                      <path fill="#F5CCB3" d="M174.6,63.7c6.2,5.7,9.9,12.5,9.9,19.8c0,34.4-25.6,35.3-57.2,35.3c-31.6,0-57.2-4.8-57.2-35.3c0-7.3,3.6-14.1,9.8-19.7c10.3-9.4,27.7-4.4,47.4-4.4C147,59.4,164.3,54.3,174.6,63.7L174.6,63.7z M174.6,63.7" />
+                      <path fill="#FFFFFF" d="M108.3,85.3c0,9.5-5.3,17.1-11.9,17.1c-6.6,0-11.9-7.7-11.9-17.1c0-9.5,5.3-17.1,11.9-17.1C103,68.1,108.3,75.8,108.3,85.3L108.3,85.3z M108.3,85.3" />
+                      <path fill="#AF5C51" d="M104.5,85.5c0,6.3-3.6,11.4-7.9,11.4c-4.4,0-7.9-5.1-7.9-11.4c0-6.3,3.6-11.4,7.9-11.4C100.9,74.1,104.5,79.2,104.5,85.5L104.5,85.5z M104.5,85.5" />
+                      <path fill="#FFFFFF" d="M172.2,85.3c0,9.5-5.3,17.1-11.9,17.1c-6.6,0-11.9-7.7-11.9-17.1c0-9.5,5.3-17.1,11.9-17.1C166.8,68.1,172.2,75.8,172.2,85.3L172.2,85.3z M172.2,85.3" />
+                      <path fill="#AF5C51" d="M168.3,85.5c0,6.3-3.6,11.4-7.9,11.4c-4.4,0-7.9-5.1-7.9-11.4c0-6.3,3.6-11.4,7.9-11.4C164.8,74.1,168.3,79.2,168.3,85.5L168.3,85.5z M168.3,85.5" />
+                      <path fill="#AF5C51" d="M130.5,100.5c0,1.6-1.3,3-3,3c-1.6,0-3-1.3-3-3s1.3-3,3-3C129.1,97.5,130.5,98.8,130.5,100.5L130.5,100.5z M130.5,100.5" />
+                      <path fill="#AF5C51" d="M120.6,108c-0.2-0.5,0.1-1,0.6-1.2c0.5-0.2,1,0.1,1.2,0.6c0.8,2.2,2.8,3.6,5.1,3.6c2.3,0,4.3-1.5,5.1-3.6c0.2-0.5,0.7-0.8,1.2-0.6c0.5,0.2,0.8,0.7,0.6,1.2c-1,2.9-3.8,4.9-6.9,4.9C124.4,112.9,121.6,110.9,120.6,108L120.6,108z M120.6,108" />
+                      <path fill="#C4E5D9" d="M54.5,121.6c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C53.6,120.2,54.5,120.8,54.5,121.6L54.5,121.6z M54.5,121.6" />
+                      <path fill="#C4E5D9" d="M60.3,124.8c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C59.4,123.4,60.3,124,60.3,124.8L60.3,124.8z M60.3,124.8" />
+                      <path fill="#C4E5D9" d="M63.8,129c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C62.9,127.5,63.8,128.2,63.8,129L63.8,129z M63.8,129" />
+                      <path fill="#C4E5D9" d="M67,133.8c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C66.1,132.3,67,133,67,133.8L67,133.8z M67,133.8" />
+                      <path fill="#C4E5D9" d="M70.5,138.2c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C69.6,136.8,70.5,137.4,70.5,138.2L70.5,138.2z M70.5,138.2" />
+                      <path fill="#C4E5D9" d="M75.3,142.1c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C74.4,140.6,75.3,141.3,75.3,142.1L75.3,142.1z M75.3,142.1" />
+                      <path fill="#C4E5D9" d="M82,144.6c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C81.1,143.2,82,143.8,82,144.6L82,144.6z M82,144.6" />
+                      <path fill="#C4E5D9" d="M88.7,144.6c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C87.8,143.2,88.7,143.8,88.7,144.6L88.7,144.6z M88.7,144.6" />
+                      <path fill="#C4E5D9" d="M95.5,143.5c0,0.8-0.9,1.4-2.1,1.4c-1.1,0-2.1-0.6-2.1-1.4c0-0.8,0.9-1.4,2.1-1.4C94.5,142.1,95.5,142.7,95.5,143.5L95.5,143.5z M95.5,143.5" />
+                  </g>
+              </svg>
+              </a>
+              
+            </div>
+          
+          </div>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <button
+      class="hidden items-center justify-center w-10 h-10 rounded-[4px] shadow-solid-5 bg-purple hover:opacity-70 fixed bottom-8 right-8 z-999"
+      @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+      @scroll.window="scrollTop = (window.pageYOffset > 50) ? true : false"
+      :class="{ '!flex' : scrollTop }"
+    >
+      <svg
+        class="fill-white w-5 h-5"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path
+          d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+        />
+      </svg>
+    </button>
+
+    <!-- <script defer src="bundle.js"></script> -->
+    <script defer src="{{ url_for('api.static', filename='js/bundle.js') }}"></script>
+
+
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"
+      integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg=="
+      data-cf-beacon='{"rayId":"7f6b81908f3b0d9f","version":"2023.8.0","r":1,"token":"9a6015d415bb4773a0bff22543062d3b","si":100}'
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
