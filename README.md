@@ -2,8 +2,7 @@
 
 <p align="center">
   <br />
-  <a href="https://github.com/smartinternz02/SBSPS-Challenge-10019-LISTNER---AI-based-Life-Assistance-Chatbot-Integration-for-public-welfare/blob/main/WORKFLOW.md
-"><b>Explore the docs »</b></a>
+  <a href="https://github.com/Devanshu-17/ListenAI/blob/main/WORKFLOW.md"><b>Explore the docs »</b></a>
   <br />
   <br />
 </p>
