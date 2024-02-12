@@ -1,4 +1,4 @@
-## Tasks to Do:
+## Tasks:
 
 -   [x] Utilize Flask, a web framework for Python, to develop the backend infrastructure of the chatbot.
 
@@ -22,6 +22,34 @@ Dataset: - https://www.kaggle.com/datasets/meetnagadia/district-wise-mental-heal
 
 [TWILIO - Whatsapp Integration]
 
+
+## IMPLEMENTATION:
+
+<br />
+
+<img width="1728" alt="Home" src="https://github.com/smartinternz02/SBSPS-Challenge-10019-LISTNER---AI-based-Life-Assistance-Chatbot-Integration-for-public-welfare/assets/93381397/8e3017dc-776b-4a8f-bfa8-986b9c3404d8">
+
+<p align="center">
+  <br />
+  <a><b> Fig 1.1 Home Page</b></a>
+</p>
+
+
+<img width="1728" alt="Chat" src="https://github.com/smartinternz02/SBSPS-Challenge-10019-LISTNER---AI-based-Life-Assistance-Chatbot-Integration-for-public-welfare/assets/93381397/38b302a2-4706-490d-9ae4-c22465d1fda3">
+
+<p align="center">
+  <br />
+  <a><b> Fig 1.2 Chat Page</b></a>
+</p>
+
+<img width="1672" alt="Whatsapp" src="https://github.com/smartinternz02/SBSPS-Challenge-10019-LISTNER---AI-based-Life-Assistance-Chatbot-Integration-for-public-welfare/assets/93381397/4b591294-4bca-44de-ab38-5499c3a59f8e">
+
+<p align="center">
+  <br />
+  <a><b> Fig 1.3 Whatsapp Bot Page</b></a>
+</p>
+
+
 ## Resouces:
 
 -   https://python.langchain.com/docs/get_started/introduction.html
@@ -33,7 +61,13 @@ Dataset: - https://www.kaggle.com/datasets/meetnagadia/district-wise-mental-heal
 
 ## WORKFLOW:
 
-![Workflow](https://github.com/Devanshu-17/Listener-AI/assets/93381397/13cc928d-9e37-4520-8619-183ab81e3e5d)
+![image](https://github.com/smartinternz02/SBSPS-Challenge-10019-LISTNER---AI-based-Life-Assistance-Chatbot-Integration-for-public-welfare/assets/93381397/056e0ae3-98a9-4914-b22a-625d292faad1)
+
+
+## FLOWCHART
+
+![image](https://github.com/smartinternz02/SBSPS-Challenge-10019-LISTNER---AI-based-Life-Assistance-Chatbot-Integration-for-public-welfare/assets/93381397/f9a5199f-8a0a-4b47-9c46-f57a7e3b26a9)
+
 
 ## How to run the project:
 
